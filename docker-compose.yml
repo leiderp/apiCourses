@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    volumes:
+      - /usr/src/app/node_modules
+      - .:/usr/src/app
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: cursos
+      MYSQL_USER: cursos_user
+      MYSQL_PASSWORD: cursos_24
+      MYSQL_PORT: 3306
+      JWT_SECRET: c4bc641b518b87c5c2f8a4471407ea58253e608c62003c04b39edd9b5147e4cf
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    links:
+      - db
+  db:
+    image: mysql:8.0-debian
+    environment:
+      MYSQL_DATABASE: cursos
+      MYSQL_USER: cursos_user
+      MYSQL_PASSWORD: cursos_24
+      MYSQL_ROOT_PASSWORD: root_24
+    ports:
+      - 5432:3306
+    volumes:
+      - mysql:/var/lib/mysql
+
+volumes:
+  mysql: ~
