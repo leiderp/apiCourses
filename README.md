@@ -10,18 +10,17 @@ _In the following link we can find the Github Repository where you can download 
 
 ### To install 🔧
 _To start the API, follow these steps:_
-```
+
 1. Download or clone this project from:
-```
+
 [Repository](https://github.com/leiderp/apiCourses.git)
-```
+
 2. Use a console and go to the root folder of the project. Then run the following command:
 ```
 docker-compose up
 ```
-
 ## Versioning 📌
 We use [Git](https://git-scm.com/) for version control
 
 ## Authors ✒️
-leiderp: Leider Pineda
+[leiderp](https://github.com/leiderp): Leider Pineda
