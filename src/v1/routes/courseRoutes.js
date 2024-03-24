@@ -11,18 +11,20 @@ const {
 
 const { paginationMiddleware } = require('../../middlewares/paginationMiddleware');
 
-router.get("/", paginationMiddleware, getAllCourse);
+const { authMiddleware } = require('../../middlewares/authMiddleware');
 
-router.get("/:courseId", getCourseDetail);
+router.get("/", authMiddleware, paginationMiddleware, getAllCourse);
 
-router.post("/", createCourse);
+router.get("/:courseId", authMiddleware, getCourseDetail);
+
+router.post("/", authMiddleware, createCourse);
 
 router.put("/:courseId", (req, res) => {
   res.send("Get all courses");
 });
 
-router.delete("/:courseId", deleteCourse);
+router.delete("/:courseId", authMiddleware, deleteCourse);
 
-router.patch("/:courseId", updateCourse);
+router.patch("/:courseId", authMiddleware, updateCourse);
 
 module.exports = router;

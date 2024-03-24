@@ -18,8 +18,9 @@ const getAllCoursesforAdmin = async (pagination) => {
   return { courses,  Course};
 };
 
-const getAllCoursesforEst = async (userId) => {
+const getAllCoursesforEst = async (pagination, userId) => {
   const courses = await Course.findAll({
+    ...pagination,
     attributes: {
       exclude: ["deletedAt", "updatedAt", "createdAt", "description"],
     },
@@ -42,7 +43,7 @@ const getAllCoursesforEst = async (userId) => {
     ],
   });
 
-  return courses;
+  return { courses,  Course};
 };
 
 const createCourse = async (dataCourse) => {
