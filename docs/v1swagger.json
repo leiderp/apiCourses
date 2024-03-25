@@ -1,0 +1,738 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API Courses",
+    "description": "This is an API for to explore and manage courses.\n\nSome useful links:\n- [API Courses Github repository](https://github.com/leiderp/apiCourses.git)",
+    "contact": {
+      "email": "leiderp.es@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Development environment"
+    },
+    {
+      "url": "http://ec2-3-132-156-184.us-east-2.compute.amazonaws.com/api/v1",
+      "description": "Production environment"
+    }
+  ],
+  "tags": [
+    {
+      "name": "courses",
+      "description": "Operations about courses"
+    },
+    {
+      "name": "auth",
+      "description": "Operations about auth"
+    }
+  ],
+  "paths": {
+    "/courses": {
+      "post": {
+        "tags": [
+          "courses"
+        ],
+        "summary": "Add a new course",
+        "description": "Add a new course",
+        "operationId": "addCourse",
+        "requestBody": {
+          "description": "Create a new course - you can send only require data, please see Schema. If you want to create a course without lessons, do not send the lessons attribute",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Course"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "courseId": {
+                          "type": "string",
+                          "example": "ec2323fa-cb56-4b9f-9d5a-9761b96aafb7"
+                        },
+                        "publicationDate": {
+                          "type": "string",
+                          "example": "2024-03-25T02:32:14.624Z"
+                        },
+                        "logo": {
+                          "type": "string",
+                          "example": "http://logocourse1.jpg"
+                        },
+                        "title": {
+                          "type": "string",
+                          "example": "course 1"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "description for course"
+                        },
+                        "introVideo": {
+                          "type": "string",
+                          "example": "http://introvideocourse1.mp4"
+                        },
+                        "lessons": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "lessonId": {
+                                "type": "string",
+                                "example": "b3c59483-4353-4fed-b6b2-194c115ef0b4"
+                              },
+                              "title": {
+                                "type": "string",
+                                "example": "lesson 1"
+                              },
+                              "description": {
+                                "type": "string",
+                                "example": "description for lesson 1"
+                              },
+                              "linkVideo": {
+                                "type": "string",
+                                "example": "http://videoLesson1.mp4"
+                              },
+                              "courseId": {
+                                "type": "string",
+                                "example": "ec2323fa-cb56-4b9f-9d5a-9761b96aafb7"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "example": "2024-03-10T02:32:14.657Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "example": "2024-03-10T02:32:16.187Z"
+                              }
+                            }
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-03-25T02:32:14.633Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-03-25T02:32:14.685Z"
+                        }
+                      }
+                    },
+                    "paginationInfo": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access token required"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "422": {
+            "description": "Validation exception - Invalid input"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "courses"
+        ],
+        "summary": "Get all courses",
+        "description": "Get all paginated registered courses",
+        "operationId": "getAllCourses",
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "courseId": {
+                            "type": "string",
+                            "example": "ec2323fa-cb56-4b9f-9d5a-9761b96aafb7"
+                          },
+                          "publicationDate": {
+                            "type": "string",
+                            "example": "2024-03-25T02:32:14.624Z"
+                          },
+                          "logo": {
+                            "type": "string",
+                            "example": "http://logocourse1.jpg"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "Course 1"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "description for course"
+                          },
+                          "introVideo": {
+                            "type": "string",
+                            "example": "http://introvideocourse1.mp4"
+                          },
+                          "numLessons": {
+                            "type": "integer",
+                            "example": 1
+                          }
+                        }
+                      }
+                    },
+                    "paginationInfo": {
+                      "type": "object",
+                      "properties": {
+                        "totalItems": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "currentPage": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access token required"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/courses/{courseId}": {
+      "get": {
+        "tags": [
+          "courses"
+        ],
+        "summary": "Find course by ID",
+        "description": "Returns a single course",
+        "operationId": "getcourseById",
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "ID of course to return",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "courseId": {
+                          "type": "string",
+                          "example": "ec2323fa-cb56-4b9f-9d5a-9761b96aafb7"
+                        },
+                        "publicationDate": {
+                          "type": "string",
+                          "example": "2024-03-25T02:32:14.624Z"
+                        },
+                        "logo": {
+                          "type": "string",
+                          "example": "http://logocourse1.jpg"
+                        },
+                        "title": {
+                          "type": "string",
+                          "example": "Course 1"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "description for course"
+                        },
+                        "introVideo": {
+                          "type": "string",
+                          "example": "http://introvideocourse1.mp4"
+                        },
+                        "lessons": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "lessonId": {
+                                "type": "string",
+                                "example": "b3c59483-4353-4fed-b6b2-194c115ef0b4"
+                              },
+                              "title": {
+                                "type": "string",
+                                "example": "lesson 1"
+                              },
+                              "description": {
+                                "type": "string",
+                                "example": "description for lesson 1"
+                              },
+                              "linkVideo": {
+                                "type": "string",
+                                "example": "http://videoLesson1.mp4"
+                              },
+                              "courseId": {
+                                "type": "string",
+                                "example": "ec2323fa-cb56-4b9f-9d5a-9761b96aafb7"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "example": "2024-03-10T02:32:14.657Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "example": "2024-03-10T02:32:16.187Z"
+                              }
+                            }
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-03-25T02:32:14.633Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-03-25T02:32:14.685Z"
+                        }
+                      }
+                    },
+                    "paginationInfo": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access token required"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Course not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "courses"
+        ],
+        "summary": "Add a new lesson to course",
+        "description": "",
+        "operationId": "updateCourseWithNewLesson",
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "ID of the course to which a new lesson is added",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Add new lesson to course",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Lesson 2"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Lesson 2 description"
+                  },
+                  "linkVideo": {
+                    "type": "string",
+                    "format": "url",
+                    "example": "http://linkvideolesson2.mp4"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "success"
+          },
+          "401": {
+            "description": "Access token required"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Course not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "courses"
+        ],
+        "summary": "Deletes a course",
+        "description": "delete a course",
+        "operationId": "deleteCourse",
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "Course id to delete",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Course deleted successfully"
+          },
+          "404": {
+            "description": "Course not found"
+          },
+          "405": {
+            "description": "Course cannot be deleted"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Create user",
+        "description": "Create user",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Marck BD"
+                  },
+                  "birthdate": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2002-10-5"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "bd@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "PasrtP136"
+                  },
+                  "role": {
+                    "type": "string",
+                    "default": "ESTUDIANTE",
+                    "enum": [
+                      "ESTUDIANTE",
+                      "ADMIN"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "userId": {
+                          "type": "string",
+                          "format": "uuid",
+                          "example": "ecfa39c6-54f4-40c3-bb77-3ad9311217d7"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Marck BD"
+                        },
+                        "birthdate": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2002-10-05T00:00:00.000Z"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "example": "bd@gmail.com"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "ESTUDIANTE"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-03-25T05:30:53.070Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-03-25T05:30:53.091Z"
+                        }
+                      }
+                    },
+                    "paginationInfo": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "303": {
+            "description": "Email has already been associated an another account"
+          },
+          "422": {
+            "description": "Validation error or Incorrect inputs"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Login user",
+        "description": "Login user",
+        "operationId": "loginUser",
+        "requestBody": {
+          "required": true,
+          "description": "user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "bd@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "PasrtP136"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "format": "jwt-token",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwOGFlYjA2LTc0YTEtNDI3YS1iODAyLTY3YjU2NDQwZGY4MiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcxMTMxMjA1MCwiZXhwIjoxNzExMzk4NDUwfQ.a6gr-5OVdQu_U7bekc-nKJDaUEwY8jbMEyN1iScfPTw"
+                        }
+                      }
+                    },
+                    "paginationInfo": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Incorrect email or password"
+          },
+          "422": {
+            "description": "Validation error or Incorrect inputs"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Course": {
+        "required": [
+          "logo",
+          "title",
+          "introVideo"
+        ],
+        "type": "object",
+        "properties": {
+          "logo": {
+            "type": "string",
+            "example": "http://logocourse1.jpg"
+          },
+          "title": {
+            "type": "string",
+            "example": "course 1"
+          },
+          "description": {
+            "type": "string",
+            "example": "description for course"
+          },
+          "publicationDate": {
+            "type": "string",
+            "example": "2024-03-10"
+          },
+          "introVideo": {
+            "type": "string",
+            "example": "http://introvideocourse1.mp4"
+          },
+          "lessons": {
+            "type": "array",
+            "items": {
+              "required": [
+                "title",
+                "linkVideo"
+              ],
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Lesson 1"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "description for lesson 1"
+                },
+                "linkVideo": {
+                  "type": "string",
+                  "example": "http://videoLesson1.mp4"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

@@ -19,10 +19,6 @@ router.get("/:courseId", authMiddleware, getCourseDetail);
 
 router.post("/", authMiddleware, createCourse);
 
-router.put("/:courseId", (req, res) => {
-  res.send("Get all courses");
-});
-
 router.delete("/:courseId", authMiddleware, deleteCourse);
 
 router.patch("/:courseId", authMiddleware, updateCourse);

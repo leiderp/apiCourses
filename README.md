@@ -11,10 +11,10 @@ _In the following link we can find the Github Repository where you can download 
 * SWAGGER
 * MySQL 8
 * Sequelize
-* DOCKER
+* DOCKER - docker-compose
 
 ### To install 🔧
-_To start the API, follow these steps:_
+_To start the API in dev environment, follow these steps:_
 
 1. Download or clone this project from: [Repository](https://github.com/leiderp/apiCourses.git)
 
@@ -24,6 +24,12 @@ docker-compose up
 ```
 ## Versioning 📌
 I use [Git](https://git-scm.com/) for version control
+
+## Deployed On 🖥️
+Deployed on AWS
+
+## DOCS 📚
+Link to documentation: [DOCS](http://ec2-3-132-156-184.us-east-2.compute.amazonaws.com/api/v1/api-docs)
 
 ## Authors ✒️
 [leiderp](https://github.com/leiderp): Leider Pineda

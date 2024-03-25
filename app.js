@@ -1,5 +1,6 @@
 const express = require("express");
 
+const v1swaggerDoc = require('./docs/v1swagger'); 
 const v1CoursesRoutes = require("./src/v1/routes/courseRoutes");
 const v1AuthRoutes = require("./src/v1/routes/userRoutes");
 const cors = require("./src/middlewares/cors");
@@ -17,6 +18,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/v1/courses", v1CoursesRoutes);
 app.use("/api/v1/auth", v1AuthRoutes);
+
+v1swaggerDoc(app);
 
 app.use((req, res, next) => {
   res.status(404);
